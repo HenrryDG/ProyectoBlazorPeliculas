@@ -1,0 +1,43 @@
+﻿@inject NavigationManager navigationManager
+<h3>FormPelicula</h3>
+
+<EditForm Model="oPeliculaFormCLS" OnValidSubmit="@guardar">
+    <DataAnnotationsValidator />
+    <div class="mt-3">
+        <label>Id Pelicula</label>
+        <InputNumber class="form-control" @bind-Value="oPeliculaFormCLS.Id" />
+        <ValidationMessage For="(()=>oPeliculaFormCLS.Id)" />
+    </div>
+
+    <div class="mt-3">
+        <label>Titulo</label>
+        <InputText class="form-control" @bind-Value="oPeliculaFormCLS.Titulo" />
+        <ValidationMessage For="(()=>oPeliculaFormCLS.Titulo)" />
+    </div>
+
+    <div class="mt-3">
+        <label>Resumen</label>
+        <InputTextArea class="form-control" @bind-Value="oPeliculaFormCLS.Resumen" />
+        <ValidationMessage For="(()=>oPeliculaFormCLS.Resumen)" />
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <button class="btn btn-danger" onclick="@regresar">Regresar</button>
+    </div>
+
+</EditForm>
+
+@code {
+    public PeliculaFormCLS oPeliculaFormCLS = new PeliculaFormCLS();
+
+    private void guardar()
+    {
+        Console.WriteLine("Di click");
+    }
+
+    private void regresar()
+    {
+        navigationManager.NavigateTo("pelicula");
+    }
+}
