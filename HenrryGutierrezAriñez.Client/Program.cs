@@ -11,4 +11,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<PeliculaService>();
 
+builder.Services.AddScoped<TipoPeliculaService>();
+
 await builder.Build().RunAsync();

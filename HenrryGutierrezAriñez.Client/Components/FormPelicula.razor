@@ -1,11 +1,14 @@
 ﻿@inject NavigationManager navigationManager
-<h3>FormPelicula</h3>
+@inject PeliculaService peliculaService
+@inject TipoPeliculaService tipoPeliculaService
+
+<h3>@Titulo</h3>
 
 <EditForm Model="oPeliculaFormCLS" OnValidSubmit="@guardar">
     <DataAnnotationsValidator />
     <div class="mt-3">
         <label>Id Pelicula</label>
-        <InputNumber class="form-control" @bind-Value="oPeliculaFormCLS.Id" />
+        <InputNumber readonly class="form-control" @bind-Value="oPeliculaFormCLS.Id" />
         <ValidationMessage For="(()=>oPeliculaFormCLS.Id)" />
     </div>
 
@@ -14,6 +17,19 @@
         <InputText class="form-control" @bind-Value="oPeliculaFormCLS.Titulo" />
         <ValidationMessage For="(()=>oPeliculaFormCLS.Titulo)" />
     </div>
+
+    <div class="mt-3">
+        <label>Tipo de pelicula</label>
+        <InputSelect class="form-control" @bind-Value="oPeliculaFormCLS.IdTipo">
+            <option value="0">Seleccione</option>
+            @foreach (var item in listaTipo)
+            {
+                <option value="@item.IdTipo">@item.NombreTipo</option>
+            }
+         </InputSelect>
+         <ValidationMessage For="(()=>oPeliculaFormCLS.IdTipo)" />
+    </div>
+
 
     <div class="mt-3">
         <label>Resumen</label>
@@ -31,9 +47,36 @@
 @code {
     public PeliculaFormCLS oPeliculaFormCLS = new PeliculaFormCLS();
 
+    [Parameter]
+    public int Id { get; set; }
+
+    public string Titulo { get; set; } = "";
+
+    public List<TipoPeliculaCLS> listaTipo { get; set; } = new List<TipoPeliculaCLS>();
+
+    protected override Task OnInitializedAsync()
+    {
+        listaTipo = tipoPeliculaService.ListarTipoPeliculas();
+        if(Id != 0)
+        {
+            Titulo = "Editar Pelicula";
+            oPeliculaFormCLS = peliculaService.RecuperarLibroPorId(Id);
+        }
+        else
+        {
+            Titulo = "Nueva Pelicula";
+        }
+
+        return base.OnInitializedAsync();
+    }
+
     private void guardar()
     {
-        Console.WriteLine("Di click");
+        if (Titulo == "Nueva Pelicula")
+        {
+            peliculaService.GuardarPelicula(oPeliculaFormCLS);
+            navigationManager.NavigateTo("pelicula");
+        }
     }
 
     private void regresar()

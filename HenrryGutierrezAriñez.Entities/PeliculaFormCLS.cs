@@ -11,7 +11,7 @@ namespace HenrryGutierrezAriñez.Entities
     {
         // PROPIEDADES
 
-        [Required (ErrorMessage = "Debe ingresar el Id")]
+        [Range (0, int.MaxValue, ErrorMessage = "El valor mínimo es 1")]
         public int Id { get; set; }
 
         [Required (ErrorMessage = "Debe ingresar el Titulo")]
@@ -22,6 +22,10 @@ namespace HenrryGutierrezAriñez.Entities
         [MaxLength(200, ErrorMessage = "El resumen no debe tener mas de 2000 caracteres")]
         [MinLength(10, ErrorMessage = "El resumen no debe tener menos de 10 caracteres")]
         public string Resumen { get; set; } = null!;
+
+
+        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un tipo de pelicula")]
+        public int IdTipo { get; set; }
 
     }
 }

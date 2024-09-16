@@ -4,15 +4,16 @@
 
 <h3>PeliculaPage</h3>
 
-<button @onclick="navegar" class="btn btn-primary">Agregar</button>
+<button @onclick="nuevo" class="btn btn-primary">Nueva Pelicula</button>
 
 @if (lista.Count > 0)
 {
-    <table class="table table-bordered">
+    <table class="table table-bordered mt-3">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Titulo</th>
+                <th>Género</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Titulo</td>
+                    <td>@item.NombreTipo</td>
                     <td>
                         <button class="btn btn-primary" @onclick="(()=>recuperarPelicula(item.Id))">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -56,7 +58,7 @@
         lista = peliculaService.ListarPeliculas();
     }
 
-    private void navegar()
+    private void nuevo()
     {
         navigationManager.NavigateTo("/formPelicula");
     }

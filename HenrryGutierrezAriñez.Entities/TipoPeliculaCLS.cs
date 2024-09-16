@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace HenrryGutierrezAriñez.Entities
 {
-    public class PeliculaListCLS
+    public class TipoPeliculaCLS
     {
-        public int Id { get; set; }
-        public string Titulo { get; set; } = null!;
-
+        public int IdTipo { get; set; }
         public string NombreTipo { get; set; } = string.Empty;
     }
 }
