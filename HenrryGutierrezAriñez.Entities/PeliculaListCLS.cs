@@ -12,5 +12,8 @@ namespace HenrryGutierrezAriñez.Entities
         public string Titulo { get; set; } = null!;
 
         public string NombreTipo { get; set; } = string.Empty;
+
+        public byte[]? Imagen { get; set; }
+
     }
 }

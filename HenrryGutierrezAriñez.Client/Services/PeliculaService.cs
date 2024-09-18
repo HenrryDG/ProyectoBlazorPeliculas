@@ -27,13 +27,13 @@ namespace HenrryGutierrezAriñez.Client.Services
             lista = listaQueda;
         }
 
-        public PeliculaFormCLS RecuperarLibroPorId(int idPelicula)
+        public PeliculaFormCLS RecuperarPeliculaPorId(int idPelicula)
         {
             var obj = lista.Where(p => p.Id == idPelicula).FirstOrDefault();
 
             if (obj != null)
             {
-                return new PeliculaFormCLS { Id = obj.Id, Titulo = obj.Titulo, Resumen = "Resumen", IdTipo = tipoPeliculaService.ObtenerIdTipoLibro(obj.NombreTipo) };
+                return new PeliculaFormCLS { Id = obj.Id, Titulo = obj.Titulo, Resumen = "Resumen", IdTipo = tipoPeliculaService.ObtenerIdTipoLibro(obj.NombreTipo), Image = obj.Imagen };
             }
             else
             {
@@ -43,9 +43,23 @@ namespace HenrryGutierrezAriñez.Client.Services
 
         public void GuardarPelicula(PeliculaFormCLS oPeliculaFormCLS)
         {
-            int IdPelicula = lista.Select(p => p.Id).Max() + 1;
+            if (oPeliculaFormCLS.Id == 0)
+            {
+                int IdPelicula = lista.Select(p => p.Id).Max() + 1;
 
-            lista.Add(new PeliculaListCLS { Id = IdPelicula, Titulo = oPeliculaFormCLS.Titulo, NombreTipo = tipoPeliculaService.ObtenerNombreTipoLibro(oPeliculaFormCLS.IdTipo) });
+                lista.Add(new PeliculaListCLS { Id = IdPelicula, Titulo = oPeliculaFormCLS.Titulo, NombreTipo = tipoPeliculaService.ObtenerNombreTipoLibro(oPeliculaFormCLS.IdTipo), Imagen = oPeliculaFormCLS.Image });
+            }
+            else
+            {
+                var obj = lista.Where(p => p.Id == oPeliculaFormCLS.Id).FirstOrDefault();
+                if (obj != null)
+                {
+                    obj.Titulo = oPeliculaFormCLS.Titulo;
+                    obj.NombreTipo = tipoPeliculaService.ObtenerNombreTipoLibro(oPeliculaFormCLS.IdTipo);
+                    obj.Imagen = oPeliculaFormCLS.Image;
+                }
+            }
+           
         }
     }
 }

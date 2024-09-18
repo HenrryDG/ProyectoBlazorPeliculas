@@ -27,5 +27,7 @@ namespace HenrryGutierrezAriñez.Entities
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un tipo de pelicula")]
         public int IdTipo { get; set; }
 
+        public byte[]? Image {  get; set; }
+
     }
 }
